@@ -1,0 +1,21 @@
+/* Header Component */
+
+header {
+    width: 100%;
+    padding: 10px;
+    min-width: 1000px;
+}
+
+#carouselExampleAutoplaying {
+    width: 1240px;
+    height: 500px;
+    max-width: 1240px;
+    max-height: 500px;
+    min-width: 1000px;
+    min-height: 500px;
+}
+
+#image-carousel {
+    object-fit: cover;
+    height: 500px;
+}

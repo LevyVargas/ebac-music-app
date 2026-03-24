@@ -1,0 +1,21 @@
+/* SearchResults Component */
+
+.musical_content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 50px 25px;
+  width: 70%;
+}
+
+.search_results_container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 35px;
+  margin-top: 3rem;
+  /* padding: 10px; */
+}

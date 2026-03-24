@@ -1,0 +1,97 @@
+/* Main Component */
+
+main {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 35px;
+  /* padding: 10px; */
+}
+
+.search_container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.search_options_container {
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.search_form {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  position: relative;
+}
+
+#search_input {
+  width: 600px;
+  background: #303030;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 3px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+#search_button {
+  width: 35px;
+  height: 35px;
+  background: #303030;
+  color: white;
+  border: none;
+  position: absolute;
+  right: 10px;
+}
+
+#search_button_div {
+  width: 25px;
+  height: 25px;
+  background: #303030;
+  color: white;
+  border: none;
+}
+
+#others_options {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  gap: 10px;
+}
+
+#others_options_text {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 10px;
+}
+
+#others_options_button{
+  border: none;
+  padding: 11px 20px;
+  border-radius: 3px;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.musical_content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 50px 25px;
+  width: 70%;
+}
