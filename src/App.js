@@ -6,44 +6,48 @@ import Footer from './components/Footer/Footer';
 import SearchResults from './components/Main/SearchResults/SearchResults';
 import Library from './components/Main/Library/Library';
 import './App.css';
+import { Route, Routes} from 'react-router-dom';
+import SongDetails from './components/Main/Song/SongDetails/SongDetails';
+import useFetch from './hooks/useFetch';
 
 function App() {
+    const [search, setSearch] = useState('coldplay');
 
-    const [songs, setSongs] = useState([
-        { id: 1, title: "Yellow", artist: "Coldplay", album: "Parachutes", img: "https://i1.sndcdn.com/artworks-9kWgKzz4Hmnw-0-t500x500.jpg", titleUrl:"https://soundcloud.com/coldplay/yellow", artistUrl:"https://soundcloud.com/coldplay", albumUrl:"https://soundcloud.com/coldplay/sets/parachutes-2" },
-        { id: 2, title: "Hotel California", artist: "Eagles", album: "Hotel California", img: "https://i1.sndcdn.com/artworks-c594ae94-9c92-46c2-84ce-13c582cf11de-0-t500x500.jpg", titleUrl:"https://soundcloud.com/eaglesofficial/eagles-hotel-california?in=eaglesofficial/sets/hotel-california-remastered", artistUrl:"https://soundcloud.com/eaglesofficial", albumUrl:"https://soundcloud.com/eaglesofficial/sets/hotel-california-remastered" },
-        { id: 3, title: "Wonderwall", artist: "Oasis", album: "What's the Story Morning Glory?", img: "https://i1.sndcdn.com/artworks-lOHuCr8tgSck-0-t500x500.jpg", titleUrl:"https://soundcloud.com/oasisofficial/wonderwall-unplugged?in=oasisofficial/sets/whats-the-story-morning-4", artistUrl:"https://soundcloud.com/oasisofficial", albumUrl:"https://soundcloud.com/oasisofficial/sets/whats-the-story-morning-4" },
-        { id: 4, title: "Eye in the Sky", artist: "The Alan Parsons Project", album: "Eye in the Sky", img: "https://i1.sndcdn.com/artworks-DwKZuBRMEbSq-0-t500x500.png", titleUrl:"https://soundcloud.com/the-alan-parsons-project/eye-in-the-sky?in=the-alan-parsons-project/sets/eye-in-the-sky-3", artistUrl:"https://soundcloud.com/the-alan-parsons-project", albumUrl:"https://soundcloud.com/the-alan-parsons-project/sets/eye-in-the-sky-3" },
-        { id: 5, title: "Numb", artist: "Linkin Park", album: "Meteora", img: "https://i1.sndcdn.com/artworks-rj0wVwfjmHzl-0-t500x500.jpg", titleUrl:"https://soundcloud.com/linkinpark/numb?in=linkinpark/sets/meteora-3", artistUrl:"https://soundcloud.com/linkinpark", albumUrl:"https://soundcloud.com/linkinpark/sets/meteora-3" },
-        { id: 6, title: "Circles", artist: "Post Malone", album: "Hollywood's Bleeding", img: "https://i1.sndcdn.com/artworks-lverghRJoIxV-0-t500x500.jpg", titleUrl:"https://soundcloud.com/postmalone/circles?in=postmalone/sets/hollywoods-bleeding-1", artistUrl:"https://soundcloud.com/postmalone", albumUrl:"https://soundcloud.com/postmalone/sets/hollywoods-bleeding-1" },
-        { id: 7, title: "Rolling in the Deep", artist: "Adele", album: "21", img: "https://i1.sndcdn.com/artworks-000168814903-4vrfjc-t500x500.jpg", titleUrl:"", artistUrl:"", albumUrl:"" },
-        { id: 8, title: "What's My Name", artist: "Rihanna", album: "Loud", img: "https://i1.sndcdn.com/artworks-c1506e2e-fe3f-4958-bdf6-f743be7a9490-0-t500x500.jpg", titleUrl:"", artistUrl:"", albumUrl:"" },
-        { id: 9, title: "Hello", artist: "Dragonette", album: "Martin Solveig", img: "https://i1.sndcdn.com/artworks-000002411460-gr94vq-t500x500.jpg", titleUrl:"", artistUrl:"", albumUrl:"" },
-        { id: 10, title: "Stylo", artist: "Gorillaz", album: "Stylo", img: "https://i1.sndcdn.com/artworks-6vXc2Pat5Qbd-0-t500x500.jpg", titleUrl:"", artistUrl:"", albumUrl:"" },
-        { id: 11, title: "Personal Jesus", artist: "Depeche Mode", album: "Violator", img: "https://i1.sndcdn.com/artworks-e68e96d3-e589-4e27-92c9-77ca9b9e7339-0-t500x500.jpg", titleUrl:"", artistUrl:"", albumUrl:"" },
-        { id: 12, title: "Hole in the Earth", artist: "Deftones", album: "Hole in the Earth", img: "https://i1.sndcdn.com/artworks-DEhiioxdsBuN-0-t500x500.jpg", titleUrl:"", artistUrl:"", albumUrl:"" }
-    ]);
+    const { music: albums, error, loading, refetch } = useFetch(`https://www.theaudiodb.com/api/v1/json/2/searchalbum.php?s=${search}`, 'album');
+
+    // const { music: albums, error, loading } = useFetch('https://www.theaudiodb.com/api/v1/json/2/searchalbum.php?s=coldplay', 'album');
 
     const [library, setLibrary] = useState([]);
 
-    const addToLibrary = (song) => {
-        if (library.some(libSong => libSong.id === song.id)) {
-            setLibrary(library.filter(libSong => libSong.id !== song.id));
+    const addToLibrary = (album) => {
+        if (library.some(lib => lib.idAlbum === album.idAlbum)) {
+            setLibrary(library.filter(lib => lib.idAlbum !== album.idAlbum));
         } else {
-            setLibrary([...library, song]);
+            setLibrary([...library, album]);
         }
-    }
+    };
 
     useEffect(() => {
         console.log("Song added to library:", library);
     }, [library]);
 
+    if (loading) return <p>Cargando...</p>;
+    if (error) return (
+        <div>
+            <p>Hubo un problema al cargar los datos. Intenta nuevamente.</p>
+            <button onClick={refetch}>Reintentar</button>
+        </div>
+    );
+
     return (
         <div className='App'>
             <Header name="SoundCloud"/>
-            <Main onAdd={addToLibrary}/>
-            <SearchResults songs={songs} onAdd={addToLibrary}/>
-            <Library songs={library} onAdd={addToLibrary}/>
+            <Routes>
+                <Route path='/' element={<Main songs={albums} onAdd={addToLibrary} onSearch={setSearch}/>}/>
+                <Route path='/search' element={<SearchResults songs={albums} onAdd={addToLibrary}/>}/>
+                <Route path='/library' element={<Library songs={library} onAdd={addToLibrary}/>}/>
+                <Route path='/song/:id' element={<SongDetails />}/>
+            </Routes>
             <Footer />
         </div>
     );

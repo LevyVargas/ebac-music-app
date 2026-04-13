@@ -1,0 +1,32 @@
+.song-details {
+    padding: 20px;
+    background-color: #282828;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.song-details__title {
+    font-size: 24px;
+    margin: 10px 0px;
+    font-weight: bold;
+}
+
+.song-details__cover {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.song-details__meta {
+    font-size: 16px;
+    color: #dadada;
+    margin-bottom: 5px;
+}
+
+.song-details__description {
+    font-size: 14px;
+    color: #dadada;
+    line-height: 1.5;
+}

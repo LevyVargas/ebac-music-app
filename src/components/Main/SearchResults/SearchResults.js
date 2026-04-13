@@ -3,22 +3,21 @@ import Song from "../Song/Song";
 import './styles.css';
 
 const SearchResults = ({ songs, onAdd }) => {
+
     return(
         <section className='search_results_container'>
-            <h3>Search Results</h3>
+            {/* <h3>Search Results</h3> */}
             <section className='musical_content'>
                 {
-                    songs.map(song => (
-                        <div key={song.id}>
+                    songs.map(album => (
+                        <div key={album.idAlbum}>
                             <Song
-                                title={song.title}
-                                artist={song.artist}
-                                album={song.album}
-                                img={song.img}
-                                titleUrl={song.titleUrl}
-                                artistUrl={song.artistUrl}
-                                albumUrl={song.albumUrl}
-                                likeSong={() => onAdd(song)}
+                                key={album.idAlbum} 
+                                idAlbum={album.idAlbum} 
+                                strAlbum={album.strAlbum}
+                                strArtist={album.strArtist}
+                                strAlbumThumb={album.strAlbumThumb}
+                                likeSong={() => onAdd(album)} 
                             />
                         </div>
                     ))

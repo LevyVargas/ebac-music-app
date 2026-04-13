@@ -8,19 +8,16 @@ const Library = ({ songs, onAdd }) => {
             <h3>Library</h3>
             <section className='musical_content'>
                 {
-                    songs.map(song => (
-                        <div key={song.id}>
+                    songs.map(album => (
+                        <div key={album.idAlbum}>
                             <Song
-                                title={song.title}
-                                artist={song.artist}
-                                album={song.album}
-                                img={song.img}
-                                titleUrl={song.titleUrl}
-                                artistUrl={song.artistUrl}
-                                albumUrl={song.albumUrl}
-                                likeSong={() => onAdd(song)}
+                                key={album.idAlbum}
+                                idAlbum={album.idAlbum}
+                                strAlbum={album.strAlbum}
+                                strArtist={album.strArtist}
+                                strAlbumThumb={album.strAlbumThumb}
+                                likeSong={() => onAdd(album)}
                             />
-
                         </div>
                     ))
                 }

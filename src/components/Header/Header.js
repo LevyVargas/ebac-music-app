@@ -3,11 +3,16 @@ import { Carousel } from 'bootstrap';
 import Logo from '../../assets/img/logo.png';
 import Title from '../../assets/img/title.png';
 import './styles.css';
+import { Link } from 'react-router-dom';
 
 const Header = ({name}) => {
     return(
         <header>
-            <h1>{name}</h1>
+            <Link to="/">
+                {/* <img src={Logo} alt="Cloud" />
+                <img src={Title} alt="SoundCloud" /> */}
+                <h1>{name}</h1>
+            </Link>
             <div className='d-flex justify-content-center mt-4 mb-4 position-relative overflow-hidden'>
                 <div id="carouselExampleAutoplaying" className="carousel slide rounded-4" data-bs-ride="carousel">
                     <div className='position-absolute z-3 top-0 start-0 w-100 d-flex justify-content-between p-4'>
