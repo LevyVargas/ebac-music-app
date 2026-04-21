@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-const useFetch = (url, key = 'album') => {
+const useFetch = (url, key = "album") => {
     const [music, setMusic] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -23,9 +23,9 @@ const useFetch = (url, key = 'album') => {
         fetchMusic();
     }, [url, key, fetchTrigger]);
 
-    const refetch = () => setFetchTrigger(t => t + 1);
+    const refetch = () => setFetchTrigger((t) => t + 1);
 
     return { music, error, loading, refetch };
-}
+};
 
 export default useFetch;

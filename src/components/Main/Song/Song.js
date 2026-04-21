@@ -1,22 +1,29 @@
-import React from 'react';
-import Overlay from './Overlay/Overlay';
-import './styles.css';
-import { Link } from 'react-router-dom';
+import React from "react";
+import Overlay from "./Overlay/Overlay";
+import {
+    SongAlbum,
+    SongArtist,
+    SongImage,
+    SongImageWrapper,
+    SongInfo,
+    SongLink,
+    SongStyle,
+} from "./styles";
 
 const Song = ({ idAlbum, likeSong, strAlbum, strArtist, strAlbumThumb }) => {
-    return(
-        <section className='album_cover'>
-            <div className="cover_image--wrapper">
-                <img src={strAlbumThumb} alt={strAlbum} className='cover_image'/>
+    return (
+        <SongStyle>
+            <SongImageWrapper>
+                <SongImage src={strAlbumThumb} alt={strAlbum} />
                 <Overlay likeSong={likeSong} idAlbum={idAlbum} />
-            </div>
-            <div className='music_container'>
-                <Link className='music_info music_info--title' to={`/song/${idAlbum}`}>{strAlbum}</Link>
-                <a className='music_info music_info--artist' href={strArtist}>{strArtist}</a>
-                <a className='music_info music_info--album' href={strAlbum}>{strAlbum}</a>
-            </div>
-        </section>
+            </SongImageWrapper>
+            <SongInfo>
+                <SongLink to={`/song/${idAlbum}`}>{strAlbum}</SongLink>
+                <SongArtist href={strArtist}>{strArtist}</SongArtist>
+                <SongAlbum href={strAlbum}>{strAlbum}</SongAlbum>
+            </SongInfo>
+        </SongStyle>
     );
-}
+};
 
 export default Song;
