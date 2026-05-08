@@ -13,6 +13,8 @@ import { ThemeProvider } from "styled-components";
 import Theme from "./theme";
 import GlobalStyle from "./theme/GlobalStyles";
 import AppStyle from "./styles";
+import { useSelector, useDispatch } from "react-redux";
+import { addSong, removeSong } from "./redux/libraryActions";
 
 function App() {
     const [search, setSearch] = useState("coldplay");
@@ -29,13 +31,20 @@ function App() {
 
     // const { music: albums, error, loading } = useFetch('https://www.theaudiodb.com/api/v1/json/2/searchalbum.php?s=coldplay', 'album');
 
-    const [library, setLibrary] = useState([]);
+    const library = useSelector((state) => state);
+    const dispatch = useDispatch();
 
     const addToLibrary = (album) => {
-        if (library.some((lib) => lib.idAlbum === album.idAlbum)) {
-            setLibrary(library.filter((lib) => lib.idAlbum !== album.idAlbum));
+        if (library.some((lib) => lib.id === album.idAlbum || lib.idAlbum === album.idAlbum)) {
+            dispatch(removeSong(album.idAlbum || album.id));
         } else {
-            setLibrary([...library, album]);
+            dispatch(addSong({
+                ...album,
+                id: album.idAlbum,
+                title: album.strAlbum,
+                artist: album.strArtist,
+                album: album.strAlbum
+            }));
         }
     };
 

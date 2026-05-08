@@ -1,8 +1,13 @@
 import React from "react";
 import Song from "../Song/Song";
 import { LibraryContent, LibraryStyle } from "./styles";
+import { useDispatch, useSelector } from "react-redux";
+import { removeSong } from "../../../redux/libraryActions";
 
-const Library = ({ songs, onAdd }) => {
+const Library = () => {
+    const songs = useSelector((state) => state.songs);
+    const dispatch = useDispatch();
+
     return (
         <LibraryStyle>
             <h3>Library</h3>
@@ -15,7 +20,7 @@ const Library = ({ songs, onAdd }) => {
                             strAlbum={album.strAlbum}
                             strArtist={album.strArtist}
                             strAlbumThumb={album.strAlbumThumb}
-                            likeSong={() => onAdd(album)}
+                            likeSong={() => dispatch(removeSong(album.id))}
                         />
                     </div>
                 ))}

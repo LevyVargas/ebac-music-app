@@ -1,8 +1,11 @@
 import React from "react";
 import Song from "../Song/Song";
 import { SearchResultsContent, SearchResultsStyle } from "./styles";
+import { useDispatch } from "react-redux";
+import { addSong } from "../../../redux/libraryActions";
 
 const SearchResults = ({ songs, onAdd }) => {
+    const dispatch = useDispatch();
     return (
         <SearchResultsStyle>
             {/* <h3>Search Results</h3> */}
@@ -15,7 +18,13 @@ const SearchResults = ({ songs, onAdd }) => {
                             strAlbum={album.strAlbum}
                             strArtist={album.strArtist}
                             strAlbumThumb={album.strAlbumThumb}
-                            likeSong={() => onAdd(album)}
+                            likeSong={() => dispatch(addSong({
+                                ...album,
+                                id: album.idAlbum,
+                                title: album.strAlbum,
+                                artist: album.strArtist,
+                                album: album.strAlbum
+                            }))}
                         />
                     </div>
                 ))}
