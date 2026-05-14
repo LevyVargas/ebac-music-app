@@ -1,11 +1,13 @@
 import React from "react";
 import Song from "../Song/Song";
 import { SearchResultsContent, SearchResultsStyle } from "./styles";
-import { useDispatch } from "react-redux";
-import { addSong } from "../../../redux/libraryActions";
+import { useDispatch, useSelector } from "react-redux";
+import { addSong } from "../../../redux/slices/librarySlice";
 
-const SearchResults = ({ songs, onAdd }) => {
+const SearchResults = () => {
     const dispatch = useDispatch();
+    const songs = useSelector((state) => state.search.results) || [];
+
     return (
         <SearchResultsStyle>
             {/* <h3>Search Results</h3> */}

@@ -8,32 +8,19 @@ import Library from "./components/Main/Library/Library";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import SongDetails from "./components/Main/Song/SongDetails/SongDetails";
-import useFetch from "./hooks/useFetch";
 import { ThemeProvider } from "styled-components";
 import Theme from "./theme";
 import GlobalStyle from "./theme/GlobalStyles";
 import AppStyle from "./styles";
 import { useSelector, useDispatch } from "react-redux";
-import { addSong, removeSong } from "./redux/libraryActions";
+import { addSong, removeSong } from "./redux/slices/librarySlice";
+import { fetchSongs } from "./redux/slices/searchSlice";
 
 function App() {
     const [search, setSearch] = useState("coldplay");
-
-    const {
-        music: albums,
-        error,
-        loading,
-        refetch,
-    } = useFetch(
-        `https://www.theaudiodb.com/api/v1/json/2/searchalbum.php?s=${search}`,
-        "album",
-    );
-
-    // const { music: albums, error, loading } = useFetch('https://www.theaudiodb.com/api/v1/json/2/searchalbum.php?s=coldplay', 'album');
-
-    const library = useSelector((state) => state);
+    const { results: albums, loading, error } = useSelector((state) => state.search);
+    const library = useSelector((state) => state.library?.library || []);
     const dispatch = useDispatch();
-
     const addToLibrary = (album) => {
         if (library.some((lib) => lib.id === album.idAlbum || lib.idAlbum === album.idAlbum)) {
             dispatch(removeSong(album.idAlbum || album.id));
@@ -52,12 +39,16 @@ function App() {
         console.log("Song added to library:", library);
     }, [library]);
 
+    useEffect(() => {
+        dispatch(fetchSongs(search));
+    }, [search, dispatch]);
+
     if (loading) return <p>Cargando...</p>;
     if (error)
         return (
             <div>
                 <p>Hubo un problema al cargar los datos. Intenta nuevamente.</p>
-                <button onClick={refetch}>Reintentar</button>
+                <button onClick={() => dispatch(fetchSongs(search))}>Reintentar</button>
             </div>
         );
 
@@ -75,11 +66,11 @@ function App() {
                     />
                     <Route
                         path="/search"
-                        element={<SearchResults songs={albums} onAdd={addToLibrary} />}
+                        element={<SearchResults />}
                     />
                     <Route
                         path="/library"
-                        element={<Library songs={library} onAdd={addToLibrary} />}
+                        element={<Library />}
                     />
                     <Route path="/song/:id" element={<SongDetails />} />
                 </Routes>

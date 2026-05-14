@@ -2,7 +2,6 @@ import React from "react";
 import { Carousel } from "bootstrap";
 import Logo from "../../assets/img/logo.png";
 import Title from "../../assets/img/title.png";
-import { Link } from "react-router-dom";
 import { HeaderCarousel, HeaderCarouselImg, HeaderLink, HeaderStyle, HeaderTitle } from "./styles";
 
 const Header = ({ name }) => {

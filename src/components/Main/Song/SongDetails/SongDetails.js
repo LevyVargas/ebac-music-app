@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import useFetch from "../../../../hooks/useFetch";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAlbumDetails, clearAlbumDetails } from "../../../../redux/slices/songDetailsSlice";
 import {
     SongDetailsCover,
     SongDetailsMeta,
@@ -9,19 +11,19 @@ import {
 
 const SongDetails = () => {
     const { id } = useParams();
-    const {
-        music: albums,
-        loading,
-        error,
-    } = useFetch(
-        `https://www.theaudiodb.com/api/v1/json/2/album.php?m=${id}`,
-        "album",
-    );
+    const dispatch = useDispatch();
+    const { album, loading, error } = useSelector((state) => state.songDetails);
+
+    useEffect(() => {
+        dispatch(fetchAlbumDetails(id));
+        return () => {
+            dispatch(clearAlbumDetails());
+        };
+    }, [id, dispatch]);
 
     if (loading) return <p>Cargando...</p>;
     if (error) return <p>Error al cargar los datos</p>;
 
-    const album = albums[0];
     if (!album) return <div>Album not found</div>;
 
     return (
